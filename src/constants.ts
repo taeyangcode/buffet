@@ -1,3 +1,5 @@
+import { Schema } from "effect";
+
 export const Link = {
 	Reddit: {
 		Index: "https://www.reddit.com",
@@ -24,6 +26,11 @@ export const Selector = {
 	},
 
 	SwordAndSupper: {
-		PostContainerClass: "article.w-full[aria-label]",
+		PostContainer: "article.w-full[aria-label]",
+
+		StartMissionButtonImage: `img[src="https://i.redd.it/3kg6d3isvyre1.png"]`
 	},
 };
+
+export const MissionLevels = Schema.Literal("41-60", "61-80")
+export type MissionLevels = typeof MissionLevels.Type;

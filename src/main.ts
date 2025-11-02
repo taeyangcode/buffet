@@ -1,18 +1,14 @@
-import { Duration, Effect, Random, Schedule } from "effect";
-import { Link, Selector } from "@/constants.js";
+import { Console, Duration, Effect, Random, Schedule } from "effect";
+import { Link } from "@/constants.js";
 import Env from "@/env.js";
 import { BrowserContext } from "@/lib/dom.js";
 import { isLoggedIn, login } from "@/lib/reddit.js";
-
-const collectMissions = Effect.gen(function* () {
-	const { page } = yield* BrowserContext;
-
-	const posts = yield* Effect.tryPromise(() => page.$$(Selector.SwordAndSupper.PostContainerClass));
-	console.log(posts.length);
-}).pipe(Effect.withSpan("@buffet/src/main/collectMissions"));
+import { collectMissions } from "@/lib/game.js";
 
 const game = Effect.gen(function* () {
-	const { page } = yield* BrowserContext;
+ 	const { page } = yield* BrowserContext;
+
+  yield* collectMissions.pipe(Effect.tap((missions) => Console.info(missions.length)));
 });
 
 const _main = Effect.gen(function* () {
